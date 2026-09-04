@@ -1,4 +1,3 @@
-
 # Sistema de Gestão de Biblioteca Municipal em Java
 
 > Trabalho de Campo da disciplina de **Introdução a Algoritmos e Programação (IAP)**  
