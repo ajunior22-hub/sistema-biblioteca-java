@@ -1,0 +1,317 @@
+import java.util.Scanner;
+
+public class SistemaBiblioteca {
+
+    // Capacidades máximas fixas (Base de dados estática em memória)
+    static final int MAX_LIVROS = 50;
+    static final int MAX_UTILIZADORES = 50;
+    static final int MAX_EMPRESTIMOS = 100;
+
+    // Matrizes e Vetores (Estruturas de Dados em Memória)
+    // [0] ID | [1] Título | [2] Autor | [3] Ano de Publicação | [4] Quantidade Disponível
+    static String[][] livros = new String[MAX_LIVROS][5];
+    static int totalLivros = 0;
+
+    // [0] ID Utilizador | [1] Nome
+    static String[][] utilizadores = new String[MAX_UTILIZADORES][2];
+    static int totalUtilizadores = 0;
+
+    // [0] ID do Livro | [1] ID do Utilizador | [2] Status ("EMPRESTADO" ou "DEVOLVIDO")
+    static String[][] emprestimos = new String[MAX_EMPRESTIMOS][3];
+    static int[] totalEmprestimosLivro = new int[MAX_LIVROS]; // Histórico acumulado por livro
+    static int totalEmprestimos = 0;
+
+    static Scanner scanner = new Scanner(System.in);
+
+    // =========================================================================
+    // MÉTODO PRINCIPAL (PONTO DE ENTRADA DO PROGRAMA)
+    // =========================================================================
+    public static void main(String[] args) {
+        // Carrega dados iniciais de demonstração
+        carregarDadosIniciais();
+
+        int opcao = -1;
+        do {
+            exibirMenu();
+            System.out.print("Escolha uma opção: ");
+
+            // Validação para evitar erros caso o utilizador digite letras
+            if (scanner.hasNextInt()) {
+                opcao = scanner.nextInt();
+                scanner.nextLine(); // Limpar buffer do teclado
+                processarOpcao(opcao);
+            } else {
+                System.out.println("\nErro: Entrada inválida! Por favor, digite um número inteiro.");
+                scanner.nextLine(); // Limpar entrada inválida
+            }
+        } while (opcao != 0);
+
+        scanner.close();
+    }
+
+    // Exibição do Menu Interativo no Terminal
+    static void exibirMenu() {
+        System.out.println("\n=============================================");
+        System.out.println("   SISTEMA DE GESTÃO DE BIBLIOTECA MUNICIPAL ");
+        System.out.println("=============================================");
+        System.out.println("1. Cadastrar Novo Livro");
+        System.out.println("2. Cadastrar Novo Utilizador");
+        System.out.println("3. Listar Todos os Livros");
+        System.out.println("4. Pesquisar Livros (Título ou Autor)");
+        System.out.println("5. Realizar Empréstimo de Livro");
+        System.out.println("6. Registrar Devolução de Livro");
+        System.out.println("7. Exibir Estatísticas do Sistema");
+        System.out.println("0. Sair do Sistema");
+        System.out.println("=============================================");
+    }
+
+    // Processador de opções do Menu
+    static void processarOpcao(int opcao) {
+        switch (opcao) {
+            case 1: registarLivro(); break;
+            case 2: registarUtilizador(); break;
+            case 3: listarLivros(); break;
+            case 4: pesquisarLivros(); break;
+            case 5: realizarEmprestimo(); break;
+            case 6: registarDevolucao(); break;
+            case 7: exibirEstatisticas(); break;
+            case 0: System.out.println("\nA encerrar o sistema... Até breve!"); break;
+            default: System.out.println("\nOpção inválida! Tente novamente.");
+        }
+    }
+
+    // 1. REGISTO DE LIVROS
+    static void registarLivro() {
+        if (totalLivros >= MAX_LIVROS) {
+            System.out.println("\nErro: Capacidade máxima de armazenamento de livros atingida!");
+            return;
+        }
+
+        System.out.println("\n--- REGISTO DE NOVO LIVRO ---");
+        String id = "L" + (totalLivros + 1);
+
+        System.out.print("Título do Livro: ");
+        String titulo = scanner.nextLine().trim();
+
+        System.out.print("Autor: ");
+        String autor = scanner.nextLine().trim();
+
+        System.out.print("Ano de Publicação: ");
+        String ano = scanner.nextLine().trim();
+
+        System.out.print("Quantidade Disponível: ");
+        int qtd = -1;
+        try {
+            qtd = Integer.parseInt(scanner.nextLine().trim());
+            if (qtd < 0) throw new NumberFormatException();
+        } catch (NumberFormatException e) {
+            System.out.println("Erro: A quantidade deve ser um número inteiro positivo.");
+            return;
+        }
+
+        // Armazenamento na matriz de livros
+        livros[totalLivros][0] = id;
+        livros[totalLivros][1] = titulo;
+        livros[totalLivros][2] = autor;
+        livros[totalLivros][3] = ano;
+        livros[totalLivros][4] = String.valueOf(qtd);
+
+        totalLivros++;
+        System.out.println("Sucesso: Livro registado com o ID " + id);
+    }
+
+    // 2. REGISTO DE UTILIZADORES
+    static void registarUtilizador() {
+        if (totalUtilizadores >= MAX_UTILIZADORES) {
+            System.out.println("\nErro: Limite máximo de utilizadores atingido!");
+            return;
+        }
+
+        System.out.println("\n--- REGISTO DE UTILIZADOR ---");
+        String id = "U" + (totalUtilizadores + 1);
+
+        System.out.print("Nome do Utilizador: ");
+        String nome = scanner.nextLine().trim();
+
+        utilizadores[totalUtilizadores][0] = id;
+        utilizadores[totalUtilizadores][1] = nome;
+
+        totalUtilizadores++;
+        System.out.println("Sucesso: Utilizador registado com o ID " + id);
+    }
+
+    // 3. CONSULTA DE CATÁLOGO (LISTAGEM TOTAL)
+    static void listarLivros() {
+        System.out.println("\n--- CATÁLOGO DE LIVROS ---");
+        if (totalLivros == 0) {
+            System.out.println("Nenhum livro cadastrado no sistema.");
+            return;
+        }
+
+        System.out.printf("%-6s | %-30s | %-20s | %-6s | %-10s\n", "ID", "TÍTULO", "AUTOR", "ANO", "DISPONÍVEL");
+        System.out.println("----------------------------------------------------------------------------------");
+
+        for (int i = 0; i < totalLivros; i++) {
+            System.out.printf("%-6s | %-30s | %-20s | %-6s | %-10s\n",
+                    livros[i][0], livros[i][1], livros[i][2], livros[i][3], livros[i][4]);
+        }
+    }
+
+    // 4. PESQUISA DE LIVROS (POR TÍTULO OU AUTOR)
+    static void pesquisarLivros() {
+        System.out.println("\n--- PESQUISA DE LIVROS ---");
+        System.out.print("Digite o termo de pesquisa (Título ou Autor): ");
+        String termo = scanner.nextLine().toLowerCase().trim();
+
+        boolean encontrado = false;
+        System.out.printf("\n%-6s | %-30s | %-20s | %-6s | %-10s\n", "ID", "TÍTULO", "AUTOR", "ANO", "DISPONÍVEL");
+        System.out.println("----------------------------------------------------------------------------------");
+
+        for (int i = 0; i < totalLivros; i++) {
+            if (livros[i][1].toLowerCase().contains(termo) || livros[i][2].toLowerCase().contains(termo)) {
+                System.out.printf("%-6s | %-30s | %-20s | %-6s | %-10s\n",
+                        livros[i][0], livros[i][1], livros[i][2], livros[i][3], livros[i][4]);
+                encontrado = true;
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("Nenhum livro corresponde ao termo pesquisado.");
+        }
+    }
+
+    // 5. GESTÃO DE EMPRÉSTIMOS
+    static void realizarEmprestimo() {
+        System.out.println("\n--- REALIZAR EMPRÉSTIMO ---");
+        if (totalEmprestimos >= MAX_EMPRESTIMOS) {
+            System.out.println("Erro: Limite máximo de registos de empréstimo atingido.");
+            return;
+        }
+
+        System.out.print("Informe o ID do Utilizador (ex: U1): ");
+        String idUser = scanner.nextLine().trim();
+        int idxUser = buscarIndiceUtilizador(idUser);
+
+        if (idxUser == -1) {
+            System.out.println("Erro: Utilizador não encontrado!");
+            return;
+        }
+
+        System.out.print("Informe o ID do Livro (ex: L1): ");
+        String idLivro = scanner.nextLine().trim();
+        int idxLivro = buscarIndiceLivro(idLivro);
+
+        if (idxLivro == -1) {
+            System.out.println("Erro: Livro não encontrado!");
+            return;
+        }
+
+        int qtdDisponivel = Integer.parseInt(livros[idxLivro][4]);
+        if (qtdDisponivel <= 0) {
+            System.out.println("Erro: Não há exemplares disponíveis deste livro para empréstimo!");
+            return;
+        }
+
+        // Abater quantidade em estoque e salvar requisição
+        livros[idxLivro][4] = String.valueOf(qtdDisponivel - 1);
+
+        emprestimos[totalEmprestimos][0] = idLivro;
+        emprestimos[totalEmprestimos][1] = idUser;
+        emprestimos[totalEmprestimos][2] = "EMPRESTADO";
+
+        totalEmprestimosLivro[idxLivro]++; // Incrementa histórico para estatísticas
+        totalEmprestimos++;
+
+        System.out.println("Sucesso: Empréstimo do livro \"" + livros[idxLivro][1] + 
+                           "\" registado para o utilizador " + utilizadores[idxUser][1] + "!");
+    }
+
+    // 6. REGISTO DE DEVOLUÇÃO
+    static void registarDevolucao() {
+        System.out.println("\n--- REGISTAR DEVOLUÇÃO ---");
+        System.out.print("Informe o ID do Utilizador (ex: U1): ");
+        String idUser = scanner.nextLine().trim();
+
+        System.out.print("Informe o ID do Livro a devolver (ex: L1): ");
+        String idLivro = scanner.nextLine().trim();
+
+        boolean encontrado = false;
+        for (int i = 0; i < totalEmprestimos; i++) {
+            if (emprestimos[i][0].equalsIgnoreCase(idLivro) &&
+                emprestimos[i][1].equalsIgnoreCase(idUser) &&
+                emprestimos[i][2].equals("EMPRESTADO")) {
+
+                emprestimos[i][2] = "DEVOLVIDO";
+
+                // Repor a quantidade do livro no acervo
+                int idxLivro = buscarIndiceLivro(idLivro);
+                if (idxLivro != -1) {
+                    int qtd = Integer.parseInt(livros[idxLivro][4]);
+                    livros[idxLivro][4] = String.valueOf(qtd + 1);
+                }
+
+                System.out.println("Sucesso: Devolução concluída com êxito!");
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("Erro: Nenhum empréstimo ativo foi encontrado com os dados informados.");
+        }
+    }
+
+    // 7. PAINEL DE ESTATÍSTICAS
+    static void exibirEstatisticas() {
+        System.out.println("\n--- ESTATÍSTICAS DA BIBLIOTECA ---");
+        System.out.println("Total de títulos cadastrados: " + totalLivros);
+        System.out.println("Total de utilizadores cadastrados: " + totalUtilizadores);
+        System.out.println("Total de empréstimos efetuados: " + totalEmprestimos);
+
+        if (totalLivros > 0) {
+            int maxEmprestimos = -1;
+            int idxMaisEmprestado = -1;
+
+            for (int i = 0; i < totalLivros; i++) {
+                if (totalEmprestimosLivro[i] > maxEmprestimos) {
+                    maxEmprestimos = totalEmprestimosLivro[i];
+                    idxMaisEmprestado = i;
+                }
+            }
+
+            if (idxMaisEmprestado != -1 && maxEmprestimos > 0) {
+                System.out.println("Livro mais emprestado: " + livros[idxMaisEmprestado][1] + 
+                                   " (Requisitado " + maxEmprestimos + " vezes)");
+            } else {
+                System.out.println("Livro mais emprestado: Nenhum livro foi requisitado até ao momento.");
+            }
+        }
+    }
+
+    // Métodos Auxiliares de Busca Por ID
+    static int buscarIndiceLivro(String id) {
+        for (int i = 0; i < totalLivros; i++) {
+            if (livros[i][0].equalsIgnoreCase(id)) return i;
+        }
+        return -1;
+    }
+
+    static int buscarIndiceUtilizador(String id) {
+        for (int i = 0; i < totalUtilizadores; i++) {
+            if (utilizadores[i][0].equalsIgnoreCase(id)) return i;
+        }
+        return -1;
+    }
+
+    // Pré-carregamento de dados de exemplo para facilitar os testes iniciais
+    static void carregarDadosIniciais() {
+        livros[0] = new String[]{"L1", "Algoritmos e Estruturas de Dados", "Cormen", "2009", "5"};
+        livros[1] = new String[]{"L2", "Java: Como Programar", "Deitel", "2017", "3"};
+        livros[2] = new String[]{"L3", "Engenharia de Software", "Pressman", "2014", "2"};
+        totalLivros = 3;
+
+        utilizadores[0] = new String[]{"U1", "António Agostinho"};
+        utilizadores[1] = new String[]{"U2", "Maria Silva"};
+        totalUtilizadores = 2;
+    }
+}
