@@ -8,7 +8,7 @@
 
 ---
 
-## 📌 1. Visão Geral do Projecto
+##  1. Visão Geral do Projecto
 
 Este projecto consiste num sistema de gestão de acervo e empréstimos para uma Biblioteca Municipal e desenvolvido em **Java** e operado via **consola (terminal)**. O sistema foi concebido para automatizar tarefas de controlo de stock de livros, registo de leitores e monitorização de requisições e devoluções.
 A aplicação simula uma **base de dados estática em memória**, utilizando exclusivamente **vetores (arrays unidimensionais)** e **matrizes bidimensionais**, sem o recurso a coleções dinâmicas ou bibliotecas externas de persistência, respeitando os requisitos da cadeira.
