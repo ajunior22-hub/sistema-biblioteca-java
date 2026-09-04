@@ -54,6 +54,14 @@ Abre o teu terminal (Prompt de Comando, PowerShell ou Terminal do Linux/Mac) e e
 
 ## Como Compilar e Executar
 
+### Pré-requisitos
+* Java Development Kit (JDK 8 ou superior) instalado.
+
+### Passos para compilação e execução
+1. Clona ou faz o download deste repositório.
+2. Abre o terminal na pasta onde se encontra o ficheiro `SistemaBiblioteca.java`.
+3. Compila o código com o comando:
+
 **Clonar este repositório:**
    ```bash
-   git clone [https://github.com/ajunior22-hub/sistema-biblioteca-java.git](https://github.com/ajunior22-hub/sistema-biblioteca-java.git)
+   git clone [https://github.com/ajunior22-hub/sistema-biblioteca-java.git]
