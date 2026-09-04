@@ -1,5 +1,5 @@
 
-# 📚 Sistema de Gestão de Biblioteca Municipal em Java
+# Sistema de Gestão de Biblioteca Municipal em Java
 
 > Trabalho de Campo da disciplina de **Introdução a Algoritmos e Programação (IAP)**  
 > **Instituição:** Universidade Aberta ISCED (UnISCED)  
@@ -10,13 +10,12 @@
 
 ## 📌 1. Visão Geral do Projecto
 
-Este projecto consiste num sistema de gestão de acervo e empréstimos para uma Biblioteca Municipal, desenvolvido em **Java** e operado via **consola (terminal)**. O sistema foi concebido para automatizar tarefas de controlo de stock de livros, registo de leitores e monitorização de requisições e devoluções.
-
+Este projecto consiste num sistema de gestão de acervo e empréstimos para uma Biblioteca Municipal e desenvolvido em **Java** e operado via **consola (terminal)**. O sistema foi concebido para automatizar tarefas de controlo de stock de livros, registo de leitores e monitorização de requisições e devoluções.
 A aplicação simula uma **base de dados estática em memória**, utilizando exclusivamente **vetores (arrays unidimensionais)** e **matrizes bidimensionais**, sem o recurso a coleções dinâmicas ou bibliotecas externas de persistência, respeitando os requisitos da cadeira.
 
 ---
 
-## 🚀 2. Funcionalidades do Sistema
+## 2. Funcionalidades do Sistema
 
 - [x] **Registo de Livros:** Cadastro de novas obras com gerador de ID automático (`L1`, `L2`, ...), título, autor, ano de publicação e quantidade em stock.
 - [x] **Registo de Utilizadores:** Cadastro dos leitores da biblioteca com ID único (`U1`, `U2`, ...).
@@ -35,7 +34,7 @@ A aplicação simula uma **base de dados estática em memória**, utilizando exc
 
 ---
 
-## 🛠️ 3. Dependências e Pré-requisitos
+## 3. Dependências e Pré-requisitos
 
 Para configurar e executar este projecto, necessita de ter os seguintes elementos instalados no seu computador:
 
@@ -49,12 +48,12 @@ Para configurar e executar este projecto, necessita de ter os seguintes elemento
 
 ---
 
-## ⚙️ 4. Configuração do Ambiente
+## 4. Configuração do Ambiente
 
 ### Passo 1: Verificar se o Java está instalado
 Abre o teu terminal (Prompt de Comando, PowerShell ou Terminal do Linux/Mac) e executa o seguinte comando:
 
-## 💻 Como Compilar e Executar
+## Como Compilar e Executar
 
 **Clonar este repositório:**
    ```bash
