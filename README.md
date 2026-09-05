@@ -60,6 +60,71 @@ Para configurar e executar este projecto, necessita de ter os seguintes elemento
 
 ---
 
+## 5
+Aqui tens uma **descrição formal e estruturada do projecto**, ideal tanto para colocares no teu ficheiro `README.md` do GitHub como para usares na introdução ou no resumo do teu relatório escrito (Word/PDF) da UnISCED:
+
+---
+
+### 📝 Descrição do Projecto
+
+#### **Título:**
+
+**Sistema de Gestão de Biblioteca Municipal em Java**
+
+#### **Resumo Geral:**
+
+O **Sistema de Gestão de Biblioteca Municipal** é uma aplicação baseada em consola (interface de linha de comandos) desenvolvida na linguagem de programação **Java**. O projecto foi concebido como Trabalho de Campo para a disciplina de **Introdução a Algoritmos e Programação (IAP)** no curso de Licenciatura em Engenharia Informática da **UnISCED**.
+
+O objectivo principal da aplicação é automatizar e simplificar a gestão operacional de uma biblioteca, permitindo o controlo do acervo bibliográfico, o registo de leitores e a gestão do fluxo de empréstimos e devoluções de obras.
+
+---
+
+### 🎯 Principais Objectivos e Características Técnicas
+
+* **Manipulação de Memória Estática:** Toda a gestão de dados (livros, utilizadores e histórico de requisições) é realizada em memória utilizando exclusivamente **vetores (arrays unidimensionais) e matrizes bidimensionais**, sem o recurso a bases de dados externas ou coleções dinâmicas, atendendo aos requisitos académicos da cadeira.
+
+
+* **Gestão de Acervo (Livros):** Permite o cadastro de novas obras com identificadores únicos gerados automaticamente (`L1`, `L2`, ...), registando título, autor, ano de publicação e quantidade de exemplares disponíveis.
+
+
+* **Gestão de Utilizadores:** Registo de leitores/utentes da biblioteca com IDs atribuídos sequencialmente (`U1`, `U2`, ...).
+
+
+* **Pesquisa e Consulta Flexível:** Disponibiliza a listagem completa do catálogo em formato tabular e permite a busca direcionada por palavras-chave no **título** ou **autor** do livro.
+
+
+* **Controlo de Empréstimos e Devoluções:** Valida a existência do utilizador e do livro, verifica o stock disponível antes de efetuar a reserva e atualiza automaticamente o inventário no momento do empréstimo e da devolução.
+
+
+* **Painel Informativo e Estatísticas:** Apresenta relatórios dinâmicos sobre o número total de livros e utilizadores registados, total de operações efetuadas e a identificação do **livro mais requisitado** pelo público.
+
+
+
+---
+
+### Ficha Técnica do Projecto
+
+| Parâmetro | Detalhe |
+| --- | --- |
+| **Linguagem** | Java (JDK 8 ou superior)
+
+ |
+| **Paradigma** | Programação Estruturada / Imperativa |
+| **Estrutura de Dados** | Matrizes Bidimensionais (`String[][]`) e Vetores (`int[]`)
+
+ |
+| **Interface** | Consola / Terminal de Linha de Comandos
+
+ |
+| **Autor** | António Agostinho Junior
+
+ |
+| **Instituição** | Universidade Aberta ISCED (UnISCED)
+
+ |
+| **Repositório GitHub** | [ajunior22-hub/sistema-biblioteca-java](https://github.com/ajunior22-hub/sistema-biblioteca-java)<br> |
+
+
 ## 5. Autor e Informações Académicas
 Autor: António Agostinho Junior
 
