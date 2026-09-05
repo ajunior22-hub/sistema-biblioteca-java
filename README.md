@@ -62,10 +62,15 @@ Para configurar e executar este projecto, necessita de ter os seguintes elemento
 
 ## 5. Autor e Informações Académicas
 Autor: António Agostinho Junior
+
 Instituição: Universidade Aberta ISCED (UnISCED)
+
 Faculdade: Faculdade de Engenharia e Agricultura
+
 Curso: Licenciatura em Engenharia Informática
+
 Cadeira: Introdução a Algoritmos e Programação (IAP)
+
 Repositório GitHub: ajunior22-hub/sistema-biblioteca-java
 
 ---
