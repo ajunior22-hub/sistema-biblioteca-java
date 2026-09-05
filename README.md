@@ -46,7 +46,7 @@ Toda a gestão de dados opera exclusivamente em memória estática através de e
 
 ---
 
-## 4.  Dependências e Pré-requisitos
+## 4.  Dependências, Pré-requisitos e descrição do projecto
 
 Para configurar e executar este projecto, necessita de ter os seguintes elementos instalados no seu computador:
 
@@ -60,12 +60,7 @@ Para configurar e executar este projecto, necessita de ter os seguintes elemento
 
 ---
 
-## 5
-Aqui tens uma **descrição formal e estruturada do projecto**, ideal tanto para colocares no teu ficheiro `README.md` do GitHub como para usares na introdução ou no resumo do teu relatório escrito (Word/PDF) da UnISCED:
-
----
-
-### 📝 Descrição do Projecto
+###  Descrição do Projecto
 
 #### **Título:**
 
@@ -98,32 +93,15 @@ O objectivo principal da aplicação é automatizar e simplificar a gestão oper
 
 * **Painel Informativo e Estatísticas:** Apresenta relatórios dinâmicos sobre o número total de livros e utilizadores registados, total de operações efetuadas e a identificação do **livro mais requisitado** pelo público.
 
-
-
 ---
 
 ### Ficha Técnica do Projecto
-
 | Parâmetro | Detalhe |
-| --- | --- |
-| **Linguagem** | Java (JDK 8 ou superior)
-
- |
+| :--- | :--- |
+| **Linguagem** | Java (JDK 8 ou superior) |
 | **Paradigma** | Programação Estruturada / Imperativa |
-| **Estrutura de Dados** | Matrizes Bidimensionais (`String[][]`) e Vetores (`int[]`)
-
- |
-| **Interface** | Consola / Terminal de Linha de Comandos
-
- |
-| **Autor** | António Agostinho Junior
-
- |
-| **Instituição** | Universidade Aberta ISCED (UnISCED)
-
- |
-| **Repositório GitHub** | [ajunior22-hub/sistema-biblioteca-java](https://github.com/ajunior22-hub/sistema-biblioteca-java)<br> |
-
+| **Estrutura de Dados** | Matrizes Bidimensionais (`String[][]`) e Vetores (`int[]`) |
+| **Interface** | Consola / Terminal de Linha de Comandos |
 
 ## 5. Autor e Informações Académicas
 Autor: António Agostinho Junior
@@ -143,6 +121,11 @@ Repositório GitHub: ajunior22-hub/sistema-biblioteca-java
 ## 6.  Configuração do Ambiente, Compilação e Execução
 
 ### Passo 1: Verificar se o Java está instalado
+
 Abre o teu terminal (Prompt de Comando, PowerShell ou Terminal do Linux/Mac) e executa:
-```bash
-java -version
+### Passo a Passo no Terminal
+1. Clona ou faz o download deste repositório.
+2. Abre o terminal na pasta onde se encontra o ficheiro `SistemaBiblioteca.java`.
+3. Compila o código-fonte:
+   ```bash
+   javac SistemaBiblioteca.java
