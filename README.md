@@ -128,4 +128,4 @@ Abre o teu terminal (Prompt de Comando, PowerShell ou Terminal do Linux/Mac) e e
 2. Abre o terminal na pasta onde se encontra o ficheiro `SistemaBiblioteca.java`.
 3. Compila o código-fonte:
    ```bash
-   javac SistemaBiblioteca.java
+   java SistemaBiblioteca.java
