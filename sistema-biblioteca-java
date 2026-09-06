@@ -2,23 +2,20 @@ import java.util.Scanner;
 
 public class SistemaBiblioteca {
 
-    // Capacidades máximas fixas (Base de dados estática em memória)
+    // Capactidades máximas fixas (Base de dados estática em memória)
     static final int MAX_LIVROS = 50;
     static final int MAX_UTILIZADORES = 50;
     static final int MAX_EMPRESTIMOS = 100;
 
-    // Matrizes e Vetores (Estruturas de Dados em Memória)
-    // [0] ID | [1] Título | [2] Autor | [3] Ano de Publicação | [4] Quantidade Disponível
-    static String[][] livros = new String[MAX_LIVROS][5];
+    // Matrizes e Vetores (Estruturas de Dados)
+    static String[][] livros = new String[MAX_LIVROS][5]; // ID, Título, Autor, Ano, Quantidade
     static int totalLivros = 0;
 
-    // [0] ID Utilizador | [1] Nome
-    static String[][] utilizadores = new String[MAX_UTILIZADORES][2];
+    static String[][] utilizadores = new String[MAX_UTILIZADORES][2]; // ID, Nome
     static int totalUtilizadores = 0;
 
-    // [0] ID do Livro | [1] ID do Utilizador | [2] Status ("EMPRESTADO" ou "DEVOLVIDO")
-    static String[][] emprestimos = new String[MAX_EMPRESTIMOS][3];
-    static int[] totalEmprestimosLivro = new int[MAX_LIVROS]; // Histórico acumulado por livro
+    static String[][] emprestimos = new String[MAX_EMPRESTIMOS][3]; // ID_Livro, ID_Utilizador, Status
+    static int[] totalEmprestimosLivro = new int[MAX_LIVROS]; // Histórico por livro
     static int totalEmprestimos = 0;
 
     static Scanner scanner = new Scanner(System.in);
@@ -27,7 +24,7 @@ public class SistemaBiblioteca {
     // MÉTODO PRINCIPAL (PONTO DE ENTRADA DO PROGRAMA)
     // =========================================================================
     public static void main(String[] args) {
-        // Carrega dados iniciais de demonstração
+        // Carrega alguns dados de exemplo ao iniciar
         carregarDadosIniciais();
 
         int opcao = -1;
@@ -35,21 +32,21 @@ public class SistemaBiblioteca {
             exibirMenu();
             System.out.print("Escolha uma opção: ");
 
-            // Validação para evitar erros caso o utilizador digite letras
+            // Validação de entrada numérica
             if (scanner.hasNextInt()) {
                 opcao = scanner.nextInt();
                 scanner.nextLine(); // Limpar buffer do teclado
                 processarOpcao(opcao);
             } else {
                 System.out.println("\nErro: Entrada inválida! Por favor, digite um número inteiro.");
-                scanner.nextLine(); // Limpar entrada inválida
+                scanner.nextLine(); // Limpar entrada incorreta
             }
         } while (opcao != 0);
 
         scanner.close();
     }
 
-    // Exibição do Menu Interativo no Terminal
+    // Exibição do Menu Interativo
     static void exibirMenu() {
         System.out.println("\n=============================================");
         System.out.println("   SISTEMA DE GESTÃO DE BIBLIOTECA MUNICIPAL ");
@@ -65,7 +62,7 @@ public class SistemaBiblioteca {
         System.out.println("=============================================");
     }
 
-    // Processador de opções do Menu
+    // Processador das opções do Menu
     static void processarOpcao(int opcao) {
         switch (opcao) {
             case 1: registarLivro(); break;
@@ -80,7 +77,7 @@ public class SistemaBiblioteca {
         }
     }
 
-    // 1. REGISTO DE LIVROS
+    // 1. REGISTRAR LIVRO
     static void registarLivro() {
         if (totalLivros >= MAX_LIVROS) {
             System.out.println("\nErro: Capacidade máxima de armazenamento de livros atingida!");
@@ -109,7 +106,6 @@ public class SistemaBiblioteca {
             return;
         }
 
-        // Armazenamento na matriz de livros
         livros[totalLivros][0] = id;
         livros[totalLivros][1] = titulo;
         livros[totalLivros][2] = autor;
@@ -120,10 +116,10 @@ public class SistemaBiblioteca {
         System.out.println("Sucesso: Livro registado com o ID " + id);
     }
 
-    // 2. REGISTO DE UTILIZADORES
+    // 2. REGISTRAR UTILIZADOR
     static void registarUtilizador() {
         if (totalUtilizadores >= MAX_UTILIZADORES) {
-            System.out.println("\nErro: Limite máximo de utilizadores atingido!");
+            System.out.println("\nErro: Limite de utilizadores atingido!");
             return;
         }
 
@@ -140,7 +136,7 @@ public class SistemaBiblioteca {
         System.out.println("Sucesso: Utilizador registado com o ID " + id);
     }
 
-    // 3. CONSULTA DE CATÁLOGO (LISTAGEM TOTAL)
+    // 3. CONSULTA / LISTAGEM DO CATÁLOGO
     static void listarLivros() {
         System.out.println("\n--- CATÁLOGO DE LIVROS ---");
         if (totalLivros == 0) {
@@ -157,7 +153,7 @@ public class SistemaBiblioteca {
         }
     }
 
-    // 4. PESQUISA DE LIVROS (POR TÍTULO OU AUTOR)
+    // 4. PESQUISA DE LIVROS (TÍTULO OU AUTOR)
     static void pesquisarLivros() {
         System.out.println("\n--- PESQUISA DE LIVROS ---");
         System.out.print("Digite o termo de pesquisa (Título ou Autor): ");
@@ -180,11 +176,11 @@ public class SistemaBiblioteca {
         }
     }
 
-    // 5. GESTÃO DE EMPRÉSTIMOS
+    // 5. EFETUAR EMPRÉSTIMO
     static void realizarEmprestimo() {
         System.out.println("\n--- REALIZAR EMPRÉSTIMO ---");
         if (totalEmprestimos >= MAX_EMPRESTIMOS) {
-            System.out.println("Erro: Limite máximo de registos de empréstimo atingido.");
+            System.out.println("Erro: Limite de registos de empréstimo atingido.");
             return;
         }
 
@@ -212,27 +208,27 @@ public class SistemaBiblioteca {
             return;
         }
 
-        // Abater quantidade em estoque e salvar requisição
+        // Atualizar estoque e gravar empréstimo
         livros[idxLivro][4] = String.valueOf(qtdDisponivel - 1);
 
         emprestimos[totalEmprestimos][0] = idLivro;
         emprestimos[totalEmprestimos][1] = idUser;
         emprestimos[totalEmprestimos][2] = "EMPRESTADO";
 
-        totalEmprestimosLivro[idxLivro]++; // Incrementa histórico para estatísticas
+        totalEmprestimosLivro[idxLivro]++; // Contabilizar estatística
         totalEmprestimos++;
 
-        System.out.println("Sucesso: Empréstimo do livro \"" + livros[idxLivro][1] + 
-                           "\" registado para o utilizador " + utilizadores[idxUser][1] + "!");
+        System.out.println("Sucesso: Empréstimo do livro " + livros[idxLivro][1] + 
+                           " registado para o utilizador " + utilizadores[idxUser][1] + "!");
     }
 
-    // 6. REGISTO DE DEVOLUÇÃO
+    // 6. REGISTRAR DEVOLUÇÃO
     static void registarDevolucao() {
         System.out.println("\n--- REGISTAR DEVOLUÇÃO ---");
-        System.out.print("Informe o ID do Utilizador (ex: U1): ");
+        System.out.print("Informe o ID do Utilizador: ");
         String idUser = scanner.nextLine().trim();
 
-        System.out.print("Informe o ID do Livro a devolver (ex: L1): ");
+        System.out.print("Informe o ID do Livro a devolver: ");
         String idLivro = scanner.nextLine().trim();
 
         boolean encontrado = false;
@@ -243,7 +239,7 @@ public class SistemaBiblioteca {
 
                 emprestimos[i][2] = "DEVOLVIDO";
 
-                // Repor a quantidade do livro no acervo
+                // Incrementar estoque de volta
                 int idxLivro = buscarIndiceLivro(idLivro);
                 if (idxLivro != -1) {
                     int qtd = Integer.parseInt(livros[idxLivro][4]);
@@ -257,11 +253,11 @@ public class SistemaBiblioteca {
         }
 
         if (!encontrado) {
-            System.out.println("Erro: Nenhum empréstimo ativo foi encontrado com os dados informados.");
+            System.out.println("Erro: Nenhum empréstimo ativo encontrado com os dados informados.");
         }
     }
 
-    // 7. PAINEL DE ESTATÍSTICAS
+    // 7. ESTATÍSTICAS
     static void exibirEstatisticas() {
         System.out.println("\n--- ESTATÍSTICAS DA BIBLIOTECA ---");
         System.out.println("Total de títulos cadastrados: " + totalLivros);
@@ -288,7 +284,7 @@ public class SistemaBiblioteca {
         }
     }
 
-    // Métodos Auxiliares de Busca Por ID
+    // Métodos Auxiliares
     static int buscarIndiceLivro(String id) {
         for (int i = 0; i < totalLivros; i++) {
             if (livros[i][0].equalsIgnoreCase(id)) return i;
@@ -303,7 +299,7 @@ public class SistemaBiblioteca {
         return -1;
     }
 
-    // Pré-carregamento de dados de exemplo para facilitar os testes iniciais
+    // Carga de dados iniciais para testes
     static void carregarDadosIniciais() {
         livros[0] = new String[]{"L1", "Algoritmos e Estruturas de Dados", "Cormen", "2009", "5"};
         livros[1] = new String[]{"L2", "Java: Como Programar", "Deitel", "2017", "3"};
